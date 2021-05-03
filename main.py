@@ -68,8 +68,8 @@ def dbpong():
                 conn.execute(stmt)
     except Exception as e:
         print(json.dumps({
-            'text': f'Error'
-            'error_msg': f'{str(e)}'
+            'text': f'Error',
+            'error_msg': str(e)
         }))
         return f'Error: {str(e)}'
     
