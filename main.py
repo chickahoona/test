@@ -12,6 +12,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def ping():
+    app.logger.info("Pong")
     return "Pong"
 
 @app.route("/dbping")
@@ -46,8 +47,10 @@ def dbpong():
             for i in range(5): # we execute the "SELECT 1;" 5 times to see latency issues better
             conn.execute(stmt)
     except Exception as e:
+        app.logger.info(f'Error: {str(e)}')
         return f'Error: {str(e)}'
     
+    app.logger.info(f"DB Pong: {(time.time() - start_time)}")
     return f"DB Pong: {(time.time() - start_time)}"
 
 
