@@ -5,6 +5,7 @@
 import os
 import sqlalchemy
 import time
+import json
 from flask import Flask
 
 from logging.config import dictConfig
@@ -29,7 +30,9 @@ app = Flask(__name__)
 
 @app.route("/")
 def ping():
-    app.logger.info("Pong")
+    print(json.dumps({
+        'text': 'Pong'
+    }))
     return "Pong"
 
 @app.route("/dbping")
@@ -64,11 +67,17 @@ def dbpong():
             for i in range(5): # we execute the "SELECT 1;" 5 times to see latency issues better
                 conn.execute(stmt)
     except Exception as e:
-        app.logger.info(f'Error: {str(e)}')
+        print(json.dumps({
+            'text': f'Error: {str(e)}'
+        }))
         return f'Error: {str(e)}'
     
-    app.logger.info(f"DBPong: {(time.time() - start_time)}")
-    return f"DBPong: {(time.time() - start_time)}"
+    elapsed = time.time() - start_time
+    print(json.dumps({
+        'text': f"DBPong: {elapsed}",
+        'time': elapsed
+    }))
+    return f"DBPong: {elapsed}"
 
 
 if __name__ == "__main__":
