@@ -4,6 +4,7 @@
 
 import os
 import sqlalchemy
+import time
 from flask import Flask
 
 app = Flask(__name__)
@@ -15,7 +16,7 @@ def ping():
 
 @app.route("/dbping")
 def dbpong():
-    
+    start_time = time.time()
     # Set the following variables depending on your specific
     # connection name and root password from the earlier steps:
     db_user = os.environ["DB_USER"]
@@ -45,9 +46,9 @@ def dbpong():
             for i in range(5): # we execute the "SELECT 1;" 5 times to see latency issues better
             conn.execute(stmt)
     except Exception as e:
-        return 'Error: {}'.format(str(e))
+        return f'Error: {str(e)}'
     
-    return "DB Pong"
+    return f"DB Pong: {(time.time() - start_time)}"
 
 
 if __name__ == "__main__":
