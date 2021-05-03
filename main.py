@@ -68,14 +68,15 @@ def dbpong():
                 conn.execute(stmt)
     except Exception as e:
         print(json.dumps({
-            'text': f'Error: {str(e)}'
+            'text': f'Error'
+            'error_msg': f'{str(e)}'
         }))
         return f'Error: {str(e)}'
     
     elapsed = time.time() - start_time
     print(json.dumps({
-        'text': f"DBPong: {elapsed}",
-        'time': elapsed
+        'text': "DBPong",
+        'elapsed': elapsed
     }))
     return f"DBPong: {elapsed}"
 
