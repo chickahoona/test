@@ -6,15 +6,30 @@ import os
 import sqlalchemy
 import time
 from flask import Flask
-import logging
-logger = logging.getLogger(__name__)
+
+from logging.config import dictConfig
+
+dictConfig({
+    'version': 1,
+    'formatters': {'default': {
+        'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
+    }},
+    'handlers': {'wsgi': {
+        'class': 'logging.StreamHandler',
+        'formatter': 'default'
+    }},
+    'root': {
+        'level': 'DEBUG',
+        'handlers': ['wsgi']
+    }
+})
 
 app = Flask(__name__)
 
 
 @app.route("/")
 def ping():
-    logger.info("Pong")
+    app.logger.info("Pong")
     return "Pong"
 
 @app.route("/dbping")
@@ -49,10 +64,10 @@ def dbpong():
             for i in range(5): # we execute the "SELECT 1;" 5 times to see latency issues better
                 conn.execute(stmt)
     except Exception as e:
-        logger.info(f'Error: {str(e)}')
+        app.logger.info(f'Error: {str(e)}')
         return f'Error: {str(e)}'
     
-    logger.info(f"DBPong: {(time.time() - start_time)}")
+    app.logger.info(f"DBPong: {(time.time() - start_time)}")
     return f"DBPong: {(time.time() - start_time)}"
 
 
