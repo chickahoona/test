@@ -11,5 +11,5 @@ The application is a small flask demo application for Cloud Run. It takes 4 envi
 The service will expose 2 endpoints
 
 - "/" This will just return "Pong". It won't do anything else
-- "/dbping" This will run 5 times "Select 1;" and then return "DB Pong" together with the time it took to run these 5 queries
+- "/dbping" This will run 5 times "Select 1;" and then return "DBPong" together with the time it took to run these 5 queries
 

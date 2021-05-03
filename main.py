@@ -45,13 +45,13 @@ def dbpong():
     try:
         with db.connect() as conn:
             for i in range(5): # we execute the "SELECT 1;" 5 times to see latency issues better
-            conn.execute(stmt)
+                conn.execute(stmt)
     except Exception as e:
         app.logger.info(f'Error: {str(e)}')
         return f'Error: {str(e)}'
     
-    app.logger.info(f"DB Pong: {(time.time() - start_time)}")
-    return f"DB Pong: {(time.time() - start_time)}"
+    app.logger.info(f"DBPong: {(time.time() - start_time)}")
+    return f"DBPong: {(time.time() - start_time)}"
 
 
 if __name__ == "__main__":
